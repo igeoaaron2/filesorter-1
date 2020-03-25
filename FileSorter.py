@@ -4,6 +4,13 @@ import time
 from watchdog.events import FileSystemEventHandler
 import os
 import json
+from tkinter import *
+
+Window = Tk()
+Window.title("FileSorter")
+
+fromtext = Entry(Window)
+totext = Entry(Window)
 
 class MyHandler(FileSystemEventHandler):
     i = 1
@@ -13,13 +20,24 @@ class MyHandler(FileSystemEventHandler):
             new_destination = folder_destination + "/" + filename
             os.rename(src, new_destination)
 
-folder_to_track = input("Please select the import folder: ")
-folder_destination = input("Please enter the export folder: ")
+folder_to_track = str(fromtext.get())
+folder_destination = str(totext.get())
 event_handler = MyHandler()
 observer = Observer()
 observer.schedule(event_handler, folder_to_track, recursive=True)
-observer.start()
-Hehehhehehehehehehehhehehehehhehehehhehe
+
+def onclick():
+    observer.start()
+
+button = Button(Window, text="Sort Files", command=onclick)
+
+fromtext.pack()
+totext.pack()
+button.pack()
+
+Window.resizable(False, False)
+
+Window.mainloop()
 
 try:
     while True:
